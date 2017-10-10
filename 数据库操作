@@ -1,0 +1,27 @@
+在数据库中添加数据
+>>>from blog.models import *
+>>>from django.utils import timezone
+>>>from django.contrib.auth.models import User
+>>>user = User.objects.get(username='chen')
+>>>Category.objects.all()
+<QuerySet [<Category: Category object>]>
+>>>c= Category.objects.get(name='django')
+>>>p = Post(title='a',body='aaa',created_time=timezone.now(),modified_time=timezone.now(),category=c,author=user)
+>>>p.save()
+
+在数据库中修改数据
+>>>from blog.models import *
+>>>p = Post.objects.first()
+>>>t = Tag(name='python')
+>>>t.save()
+>>>p.tags=t
+# tags是多对多关系，需要多个标签
+TypeError: 'NoneType' object is not iterable
+>>>c = Category(name='flask')
+>>>c.save()
+#  category是一对多的关系，
+>>>p.category=c
+#  必须写成列表的格式，支持循环
+>>>p.tags=[t]
+>>>p.save()
+
