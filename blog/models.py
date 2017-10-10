@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 # User是一个自带的模型类，里面是用户的字段
 from django.contrib.auth.models import User
 
@@ -39,6 +40,13 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     #  文章和作者是多对一的关系，其中作者从django.contrib.auth.models导入的User模型类
     author = models.ForeignKey(User)
+
+
+    #  自定义 get_absolute_url 方法
+    #  从 django.urls 中导入 reverse 函数
+    def get_absolute_url(self):
+        #  使用reverse函数，生成一个完整的url
+        return reverse('blog:detail',kwargs={'pk':self.pk})
 
     def __str__(self):
         return self.title
