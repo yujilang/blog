@@ -15,7 +15,7 @@ def index(request):
     #  获取Post的所有数据，并按最新的创建时间在上进行排序
     #  Post.objects.all()   查找所有数据
     #  order_by()  对数据进行排序
-    post_list = Post.objects.all().order_by('-created_time')
+    post_list = Post.objects.all()
 
     #  页面渲染
     context = {
@@ -62,7 +62,7 @@ def archives(request,year,month):
     #  即 created_time__year。
     post_list = Post.objects.filter(created_time__year=year,
                                     created_time__month=month
-                                    ).order_by('-created_time')
+                                    )
     context = {
         'post_list':post_list
     }
@@ -73,7 +73,7 @@ def category(request,pk):
     #  根据分类的 pk 值（也就是被访问的分类的 id 值） 在 Category 中获取这个分类的信息（分类的name）
     cate = get_object_or_404(Category,pk=pk)
     #  根据 cate 在 Post 中过滤出该分类下的所有文章，并进行排序
-    post_list = Post.objects.filter(category=cate).order_by('-created_time')
+    post_list = Post.objects.filter(category=cate)
     context = {
         'post_list':post_list
     }

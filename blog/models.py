@@ -50,3 +50,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        #  ordering 属性用来指定文章排序方式，
+        #  这样指定以后所有返回的文章列表都会自动按照 Meta 中指定的顺序排序，
+        #  因此可以删掉视图函数中对文章列表中返回结果进行排序的代码了。
+        ordering = ['-created_time','-modified_time']
