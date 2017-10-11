@@ -29,6 +29,9 @@ def detail(request,pk):
     #  get_object_or_404() 包含try：  except:
     post = get_object_or_404(Post,pk=pk)
 
+    #  调用 increase_views() 方法，使得阅读量+1
+    post.increase_views()
+
     #  对 post.body 多了一个中间步骤，先将 Markdown 格式的文本渲染成 HTML 文本再传递给模板
     #  参数 extensions，是对 Markdown 语法的拓展
     #  设置完成后，在发布的文章详情页没有看到预期的效果，而是类似于一堆乱码一样的 HTML 标签，
@@ -43,8 +46,10 @@ def detail(request,pk):
 
     #  在顶部导入 CommentForm，这里实例化没有 request.POST 作为参数，因此表单都是空的
     form = CommentForm()
+
     #  获取这篇 post 下的全部评论
     comment_list = post.comment_set.all()
+
     #  将文章、表单、以及文章下的评论列表作为模板变量传给 detail.html 模板，以便渲染相应数据。
     context = {
         'post':post,

@@ -41,6 +41,15 @@ class Post(models.Model):
     #  文章和作者是多对一的关系，其中作者从django.contrib.auth.models导入的User模型类
     author = models.ForeignKey(User)
 
+    #  文章阅读量
+    #  views 字段的类型为 PositiveIntegerField，该类型的值只允许为正整数或 0
+    views = models.PositiveIntegerField(default=0)
+
+    def increase_views(self):
+        self.views+=1
+        #  调用 save 方法将更改后的值保存到数据库
+        #  使用 update_fields 参数来告诉 Django 只更新数据库中 views 字段的值，以提高效率
+        self.save(update_fields=['views'])
 
     #  自定义 get_absolute_url 方法
     #  从 django.urls 中导入 reverse 函数
