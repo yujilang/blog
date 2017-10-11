@@ -100,7 +100,7 @@
                     <ul>
                         {% for data in date_list %}
                             <li>
-                                <a href="#">
+                                <a href="{% url 'blog:archives' data.year data.month %}">
                                     {{ data.year }}年{{ data.month }}月
                                 </a>
                             </li>
@@ -116,7 +116,7 @@
                     <ul>
                         {% for category in category_list %}
                             <li>
-                                <a href="#">
+                                <a href="{% url 'blog:category' category.pk %}">
                                     {{ category.name }}<span class="post-count">{13}</span>
                                 </a>
                             </li>

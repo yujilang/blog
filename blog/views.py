@@ -42,4 +42,30 @@ def detail(request,pk):
 
     context = {'post':post}
     return  render(request,'blog/detail.html',context)
+
+#  归档页面
+def archives(request,year,month):
+    #  使用 objects.filter() 方法过滤文章
+    #  created_time 是 Python 的 date 对象，其有一个 year 和 month 属性
+    #  Python 中类实例调用属性的方法通常是 created_time.year，
+    #  但是由于这里作为函数的参数列表，所以 Django 要求我们把点替换成了两个下划线，
+    #  即 created_time__year。
+    post_list = Post.objects.filter(created_time__year=year,
+                                    created_time__month=month
+                                    ).order_by('-created_time')
+    context = {
+        'post_list':post_list
+    }
+    return render(request,'blog/index.html',context)
+
+#  分类页面
+def category(request,pk):
+    #  根据分类的 pk 值（也就是被访问的分类的 id 值） 在 Category 中获取这个分类的信息（分类的name）
+    cate = get_object_or_404(Category,pk=pk)
+    #  根据 cate 在 Post 中过滤出该分类下的所有文章，并进行排序
+    post_list = Post.objects.filter(category=cate).order_by('-created_time')
+    context = {
+        'post_list':post_list
+    }
+    return render(request,'blog/index.html',context)
 # Create your views here.
