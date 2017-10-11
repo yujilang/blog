@@ -2,6 +2,8 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from .models import *
 
+from comment.forms import CommentForm
+
 #  Markdown 是一种 HTML 文本标记语言，只要遵循它约定的语法格式，
 #  Markdown 的渲染器就能够把我们写的文章转换为标准的 HTML 文档，
 #  从而让我们的文章呈现更加丰富的格式，例如标题、列表、代码块等等 HTML 元素。
@@ -39,8 +41,16 @@ def detail(request,pk):
                         'markdown.extensions.toc',  #  toc 允许我们自动生成目录
                         ])
 
-
-    context = {'post':post}
+    #  在顶部导入 CommentForm，这里实例化没有 request.POST 作为参数，因此表单都是空的
+    form = CommentForm()
+    #  获取这篇 post 下的全部评论
+    comment_list = post.comment_set.all()
+    #  将文章、表单、以及文章下的评论列表作为模板变量传给 detail.html 模板，以便渲染相应数据。
+    context = {
+        'post':post,
+        'form':form,
+        'comment_list':comment_list,
+    }
     return  render(request,'blog/detail.html',context)
 
 #  归档页面
