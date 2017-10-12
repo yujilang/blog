@@ -7,7 +7,10 @@ from comment.forms import CommentForm
 #  Markdown 是一种 HTML 文本标记语言，只要遵循它约定的语法格式，
 #  Markdown 的渲染器就能够把我们写的文章转换为标准的 HTML 文档，
 #  从而让我们的文章呈现更加丰富的格式，例如标题、列表、代码块等等 HTML 元素。
-from markdown import markdown
+from markdown import markdown,Markdown
+
+from django.utils.text import slugify
+from markdown.extensions.toc import TocExtension
 
 #  generic 通用视图
 #  针对从数据库中获取某个模型列表数据，使用 ListView 类视图
@@ -228,11 +231,25 @@ class PostDetailView(DetailView):
     #  覆写 get_object 方法的目的是因为需要对 post 的 body 值进行渲染
     def get_object(self, queryset=None):
         post = super().get_object(queryset=None)
-        post.body = markdown(post.body, extensions=[
+
+        #  先实例化了一个 Markdown 类 md，和 markdown() 方法一样
+        md = Markdown(extensions=[
             'markdown.extensions.extra',  # extra 本身包含很多拓展
             'markdown.extensions.codehilite',  # codehilite 是语法高亮拓展
-            'markdown.extensions.toc',  # toc 允许我们自动生成目录
+            #  在顶部引入 TocExtension 和 slugify
+            #  使用了 django.utils.text 中的 slugify 方法，该方法可以很好地处理中文
+            #  把锚点修改为文章的实际标题
+            TocExtension(slugify=slugify),
         ])
+
+        #  使用该实例的 convert 方法将 post.body 中的Markdown 文本渲染成 HTML 文本
+        post.body = md.convert(post.body)
+
+        #  把 md.toc 的值赋给 post.toc 属性
+        #  要注意这个 post 实例本身是没有 md 属性的，
+        #  我们给它动态添加了md 属性，这就是 Python 动态语言的好处
+
+        post.toc = md.toc
         return post
 
     #  覆写 get_context_data 的目的是因为除了将 post 传递给模板外
