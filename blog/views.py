@@ -304,4 +304,11 @@ class CategoryView(IndexView):
         #  对返回的结果调用了 filter 方法来筛选该分类下的全部文章并返回
         #  下面 filter(category=cate) 中的 category 是 post.category
         return super().get_queryset().filter(category=cate)
+
+#  标签云页面
+#  原理同上
+class TagView(IndexView):
+    def get_queryset(self):
+        tag = get_object_or_404(Tag,pk=self.kwargs.get('pk'))
+        return super().get_queryset().filter(tags=tag)
 # Create your views here.

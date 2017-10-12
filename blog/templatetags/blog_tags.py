@@ -34,3 +34,9 @@ def get_categories():
     #  annotate 的作用就是往模型类中新增一个属性，
     #  这里新增了 num_posts 属性，注意并非保存到数据库，
     return Category.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
+
+#  标签云
+@register.simple_tag
+def get_tags():
+    # 与分类同理
+    return Tag.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
