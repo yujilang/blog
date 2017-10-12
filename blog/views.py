@@ -37,6 +37,8 @@ class IndexView(ListView):
     template_name = 'blog/index.html'
     #  指定获取的模型列表数据保存的变量名。这个变量会被传递给模板。
     context_object_name = 'post_list'
+    #  指定 paginate_by 属性后开启分页功能，其值代表每一页包含多少篇文章
+    paginate_by = 2
 
 #   文章详情页面视图函数
 
@@ -90,6 +92,7 @@ class PostDetailView(DetailView):
 
         #  将文章阅读量 +1
         #  self.object 的值就是被访问的文章 post
+        #  每次请求文章详情页，都会调用get方法，因此increase_views写在get()当中比较合适
         self.object.increase_views()
 
         #  视图必须返回一个 HttpResponse 对象

@@ -1,0 +1,28 @@
+>>> from django.core.paginator import Paginator
+>>> l = ['a','b','c','d','e']
+>>> p = Paginator(l,2)
+#  一共多少页
+>>> p.num_pages
+3
+#  获取某一页的对象列表
+>>> page1 = p.page(1)
+#  显示某一页的内容
+>>> page1.object_list
+['a', 'b']
+#  当前页的页码
+>>> page1.number
+1
+#  当前页是否有上一页
+>>> page1.has_previous()
+False
+#  当前页是否有下一页
+>>> page1.has_next()
+True
+#  当前页下一页的页码
+>>> page1.next_page_number()
+2
+>>> page2 = p.page(2)
+#  当前页上一页的页码
+>>> page2.previous_page_number()
+1
+>>> exit()
