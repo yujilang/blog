@@ -18,6 +18,8 @@ from markdown.extensions.toc import TocExtension
 #  对于这种类型的需求，Django 提供了一个 DetailView 类视图
 from django.views.generic import ListView,DetailView
 
+from django.db.models import Q
+
 #  文章总数页面视图函数
 
 # def index(request):
@@ -328,4 +330,30 @@ class TagView(IndexView):
     def get_queryset(self):
         tag = get_object_or_404(Tag,pk=self.kwargs.get('pk'))
         return super().get_queryset().filter(tags=tag)
+
+def search(request):
+    #  用户通过表单 get 方法提交的数据 Django 为我们保存在 request.GET 里,
+    #  类似于 Python 字典的对象
+    #  使用 get 方法从字典里取出键 q 对应的值，即用户的搜索关键词
+    q = request.GET.get('q')
+    error_msg = ''
+
+    #  如果用户没有输入搜索关键词而提交了表单，就无需执行查询，
+    #  在模板中渲染一个错误提示信息
+    if not q:
+        error_msg = '请输入关键词'
+        context = {'error_msg':error_msg}
+        return render(request,'blog/index.html',context)
+
+    #  title__icontains=q，即 title 中包含（contains）关键字 q
+    #  body__icontains=q, 即 body 中包含（contains）关键字 q
+    #  Q(title__icontains=q) | Q(body__icontains=q) 表示标题（title）含有关键词 q 或者正文（body）含有关键词 q
+    #  或逻辑使用 | 符号
+    post_list = Post.objects.filter(Q(title__icontains=q)|Q(body__icontains=q))
+
+    context = {
+        'post_list':post_list,
+        'error_msg': error_msg,
+    }
+    return render(request,'blog/index.html',context)
 # Create your views here.

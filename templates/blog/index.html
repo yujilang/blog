@@ -3,7 +3,10 @@
 
 {% block main %}
      <main class="col-md-8">
-        {% for post in post_list %}
+         {% if error_msg %}
+            <p>{{ error_msg }}</p>
+         {% endif %}
+         {% for post in post_list %}
             <article class="post post-{{ post.pk }}">
                 <header class="entry-header">
                     <h1 class="entry-title">
