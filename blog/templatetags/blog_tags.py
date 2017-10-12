@@ -5,6 +5,8 @@ from django import template
 #  导入所有模型
 from ..models import *
 
+from django.db.models.aggregates import Count
+
 #  首先创建一个全局register变量，用来注册自定义标签和过滤器
 #  实例化 template.Library() 类
 register = template.Library()
@@ -28,4 +30,7 @@ def archives():
 #  分类
 @register.simple_tag
 def get_categories():
-    return Category.objects.all()
+    #  Count 计算分类下的文章数，其接受的参数为需要计数的模型的名称
+    #  annotate 的作用就是往模型类中新增一个属性，
+    #  这里新增了 num_posts 属性，注意并非保存到数据库，
+    return Category.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
