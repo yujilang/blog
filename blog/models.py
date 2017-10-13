@@ -1,7 +1,12 @@
 from django.db import models
 from django.urls import reverse
+
 # User是一个自带的模型类，里面是用户的字段
 from django.contrib.auth.models import User
+
+#  使用第二种方法时
+#  使用 users 应用下的 User 用户模型
+#from users.models import User
 
 from markdown import Markdown
 from django.utils.html import strip_tags

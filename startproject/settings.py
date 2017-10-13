@@ -141,3 +141,7 @@ HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 #  这里我们使用 haystack.signals.RealtimeSignalProcessor，
 #  作用是每当有文章更新时就更新索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+#  使用第二种方法时
+#  通过 AUTH_USER_MODEL 指定自定义用户模型所在的位置
+#  AUTH_USER_MODEL = 'users.User'
