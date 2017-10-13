@@ -54,6 +54,13 @@
                             <li class="cl-effect-11"><a href="full-width.html" data-hover="博客">博客</a></li>
                             <li class="cl-effect-11"><a href="about.html" data-hover="关于">关于</a></li>
                             <li class="cl-effect-11"><a href="contact.html" data-hover="联系">联系</a></li>
+                            {% if user.is_authenticated %}
+                                <li class="cl-effect-11"><a href="#">欢迎您：{{ user.username }}</a></li>
+                                <li class="cl-effect-11"><a href="{% url 'logout' %}" >退出</a></li>
+                            {% else %}
+                                <li class="cl-effect-11"><a href="{% url 'login' %}">登陆</a></li>
+                                <li class="cl-effect-11"><a href="{% url 'users:register' %}">注册</a></li>
+                            {% endif %}
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -70,8 +77,6 @@
         </div>
     </header>
 </div>
-<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
-<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
 
 <div class="content-body">
     <div class="container">
