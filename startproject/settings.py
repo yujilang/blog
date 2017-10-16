@@ -152,4 +152,13 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 # LOGOUT_REDIRECT_URL = '/'
 # LOGIN_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#  邮件配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#  与SMTP服务器通信时，是否启动TLS链接(安全链接)。默认是false
+#  163邮箱 TLS 是 True
+EMAIL_USE_TLS = True  #  TLS = transtion layer security
+EMAIL_HOST = 'smtp.163.com'   #  SMTP地址
+EMAIL_PORT = 25  #  SMTP端口
+EMAIL_HOST_USER = '18795387702@163.com'  #  自己的邮箱名
+EMAIL_HOST_PASSWORD = '3w.1208.com'  #  自己的邮箱密码
+DEFAULT_FROM_EMAIL = '18795387702@163.com'  #  谁发送的邮件
