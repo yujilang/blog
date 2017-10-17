@@ -149,8 +149,10 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 #  通过 AUTH_USER_MODEL 指定自定义用户模型所在的位置
 #  AUTH_USER_MODEL = 'users.User'
 
-# LOGOUT_REDIRECT_URL = '/'
-# LOGIN_REDIRECT_URL = '/'
+#  登陆成功后返回首页
+LOGOUT_REDIRECT_URL = '/'
+#  注销成功后返回首页
+LOGIN_REDIRECT_URL = '/'
 
 #  邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -162,3 +164,11 @@ EMAIL_PORT = 25  #  SMTP端口
 EMAIL_HOST_USER = '18795387702@163.com'  #  自己的邮箱名
 EMAIL_HOST_PASSWORD = '3w.1208.com'  #  自己的邮箱密码
 DEFAULT_FROM_EMAIL = '18795387702@163.com'  #  谁发送的邮件
+
+#  告诉 Django ，需要使用哪些 Backends 对用户的凭据信息进行验证
+AUTHENTICATION_BACKENDS = (
+    #  内置 Backend ，当用户提供用户名和正确的密码时该 Backend 会验证通过
+    'django.contrib.auth.backends.ModelBackend',
+    #  刚刚自定义的 Backend ，当用户提供的是 Email 和正确的密码时该 Backend 会验证通过
+    'users.backends.EmailBackend',
+)
