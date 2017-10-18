@@ -172,3 +172,7 @@ AUTHENTICATION_BACKENDS = (
     #  刚刚自定义的 Backend ，当用户提供的是 Email 和正确的密码时该 Backend 会验证通过
     'users.backends.EmailBackend',
 )
+
+#  上传头像
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

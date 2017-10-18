@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <main class="col-md-8">
+        <form action="{% url 'publish:submit_post' %}" method="post">
+            {% csrf_token %}
+            <label>标题：</label><input type="text" name="title"/>
+            <br/>
+            <label>分类：</label><select name="category">
+            <br/>
+            {% for category in category_list %}
+                <option>{{ category.name }}</option>
+            {% endfor %}
+            </select>
+            <br/>
+            <label>标签：</label><select name="tag">
+            <br/>
+            {% for tag in tag_list %}
+                <option>{{ tag.name }}</option>
+            {% endfor %}
+            </select>
+            <br/>
+            <label>内容：</label><textarea cols="100" name="content"></textarea>
+            <br/>
+            <input type="submit" value="提交"/>
+        </form>
+    </main>
+{% endblock %}

@@ -1,14 +1,10 @@
 from django.db import models
 
-
+from django.contrib.auth.models import User
 
 class Comment(models.Model):
     #  评论人的名字
-    name = models.CharField(max_length=128)
-    #  邮箱
-    email = models.EmailField(max_length=256)
-    #  网址
-    url = models.URLField(blank=True)
+    name = models.ForeignKey(User)
     #  评论内容
     text = models.TextField()
     #  评论时间
@@ -17,6 +13,8 @@ class Comment(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     #  评论与文章是多对一的关系
     post = models.ForeignKey('blog.Post')
+    #  自关联，实现多级评论功能
+    parent_comment = models.ForeignKey('self', related_name='p_comment', null=True, blank=True)
 
     def __str__(self):
         return self.text[:20]

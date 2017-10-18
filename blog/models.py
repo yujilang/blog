@@ -34,9 +34,9 @@ class Post(models.Model):
     #  文章正文
     body=models.TextField()
     #  创建时间
-    created_time=models.DateTimeField()
+    created_time=models.DateTimeField(auto_now_add=True)
     #  修改时间
-    modified_time=models.DateTimeField()
+    modified_time=models.DateTimeField(auto_now=True)
     #  摘要 可以为空
     exerpt=models.CharField(max_length=256,blank=True)
 

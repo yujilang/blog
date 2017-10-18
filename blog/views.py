@@ -264,14 +264,9 @@ class PostDetailView(DetailView):
         #  空表单
         form = CommentForm()
 
-        #  全部评论
-        #  self.object 等价于 post
-        comment_list = self.object.comment_set.all()
-
         #  context 已有 post，所以使用 update 更新 context
         context.update({
             'form':form,
-            'comment_list':comment_list,
         })
         return context
 #  归档页面

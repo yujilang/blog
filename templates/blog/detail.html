@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block main %}
     <main class="col-md-8">
@@ -42,21 +43,6 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="{{ form.name.id_for_label }}">名字：</label>
-                        {{ form.name }}
-                        {{ form.name.errors }}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="{{ form.email.id_for_label }}">邮箱：</label>
-                        {{ form.email }}
-                        {{ form.email.errors }}
-                    </div>
-                    <div class="col-md-4">
-                        <label for="{{ form.url.id_for_label }}">网址：</label>
-                        {{ form.url }}
-                        {{ form.url.errors }}
-                    </div>
-                    <div class="col-md-4">
                         <label for="{{ form.text.id_for_label }}">评论：</label>
                         {{ form.text }}
                         {{ form.text.errors }}
@@ -67,17 +53,12 @@
             <div class="comment-list-panel">
                 <h3>评论列表，共 <span>{{ post.comment_set.count }}</span> 条评论</h3>
                 <ul class="comment-list list-unstyled">
-                    {% for comment in comment_list %}
-                        <li class="comment-item">
-                            <span class="nickname">{{ comment.name }}</span>
-                            <time class="submit-date">{{ comment.created_time }}</time>
-                            <div class="text">
-                                {{ comment.text }}
-                            </div>
-                        </li>
-                    {% empty %}
+                    {% if post.comment_set.all %}
+                        {# 引用自定义模板标签 build_comment_tree 传入参数 全部评论列表 post.comment_set.all #}
+                        {% build_comment_tree post.comment_set.all %}
+                    {% else %}
                         没有评论！
-                    {% endfor %}
+                    {% endif %}
 
                 </ul>
             </div>
