@@ -19,12 +19,13 @@ def generate_comment_html(sub_comment_dic,margin_left_val):
     for k,v_dic in sub_comment_dic.items():#循环穿过来的字典
         html += ('<li style="margin-left:%spx" class="comment-item">' % margin_left_val + "\n\r"
                 '<img class="img-circle" width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
-                '<span class="nickname">%s</span>' + "\n\r"
+                '<span class="nickname"><a href="/accounts/show/%d">%s</a></span>' + "\n\r"
                 '<time class="submit-date">%s</time>' + "\n\r"
                 '<div class="text">' + "\n\r"
                 + str(k.text) + "\n\r"
                 '</div>' + "\n\r"
                 '</li>')%(k.name.profile.avatar.url,
+                          k.name.id,
                           k.name,
                           k.created_time.strftime("%Y-%m-%d %T"))
         #上面的只是把第一层加了他可能还有儿子,所以通过递归继续加
@@ -52,12 +53,13 @@ def build_comment_tree(comment_list):
         #第一层的html
         html += ('<li class="comment-item">' + "\n\r"
                 '<img class="img-circle" width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
-                '<span class="nickname">%s</span>' + "\n\r"
+                '<span class="nickname"><a href="/accounts/show/%d">%s</a></span>' + "\n\r"
                 '<time class="submit-date">%s</time>' + "\n\r"
                 '<div class="text">' + "\n\r"
                 + str(k.text) + "\n\r"
                 '</div>' + "\n\r"
                 '</li>')%(k.name.profile.avatar.url,
+                          k.name.id,
                           k.name,
                           k.created_time.strftime("%Y-%m-%d %T"))
 

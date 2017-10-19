@@ -1,19 +1,51 @@
-{% extends 'base.html' %}
+{% extends 'up_base.html' %}
 
-{% block main %}
-    <main class="col-md-8">
-        {% for user in user_list %}
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Panel title</h3>
-              </div>
-              <div class="panel-body">
-                {{ user }}
-              </div>
-            </div>
-        {% endfor %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">名字</h3>
+                    </div>
+                    <div class="panel-body">
+                      {{ user_list.username }}
+                    </div>
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">昵称</h3>
+                    </div>
+                    <div class="panel-body">
+                      {{ user_list.profile.nickname }}
+                    </div>
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">手机号</h3>
+                    </div>
+                    <div class="panel-body">
+                      {{ user_list.profile.phone }}
+                    </div>
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">邮箱</h3>
+                    </div>
+                    <div class="panel-body">
+                      {{ user_list.email }}
+                    </div>
+
+                </div>
+            </main>
+            <main class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">头像</h3>
+                    </div>
+                </div>
+                <img class="img-circle" style="margin: 50px 100px" width="158" height="158" src="{{ user_list.profile.avatar.url }}" alt="个人头像" />
+            </main>
+        </div>
+    </div>
 
 
-    </main>
 
 {% endblock %}
