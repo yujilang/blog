@@ -58,7 +58,7 @@
                                 {% endif %}
                                 <li class="cl-effect-11"><a href="#">欢迎您：{{ user.username }}</a></li>
                                 {# 显示用户头像 #}
-                                <li class="cl-effect-11"><a><img width="40" height="40" src="{{ request.user.profile.avatar.url }}" alt="个人头像" /></a></li>
+                                <li class="cl-effect-11"><a><img class="img-circle" width="40" height="40" src="{{ request.user.profile.avatar.url }}" alt="个人头像" /></a></li>
                                 {# request.path 是用户当前访问页面的 URL #}
                                 <li class="cl=effect-ll"><a href="{% url 'password_change' %}">修改密码</a></li>
                                 <li class="cl-effect-11"><a href="{% url 'logout' %}" >退出</a></li>

@@ -42,12 +42,8 @@
                 {#   跨站请求伪造保护  csrf:cross site request forgery #}
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-md-4">
-                        <label for="{{ form.text.id_for_label }}">评论：</label>
-                        {{ form.text }}
-                        {{ form.text.errors }}
-                        <button type="submit" class="comment-btn">发表</button>
-                    </div>
+                    {{ form.text }}
+                    {{ form.text.errors }}
                 </div>    <!-- row -->
             </form>
             <div class="comment-list-panel">

@@ -18,7 +18,7 @@ def generate_comment_html(sub_comment_dic,margin_left_val):
     html = ""
     for k,v_dic in sub_comment_dic.items():#循环穿过来的字典
         html += ('<li style="margin-left:%spx" class="comment-item">' % margin_left_val + "\n\r"
-                '<img width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
+                '<img class="img-circle" width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
                 '<span class="nickname">%s</span>' + "\n\r"
                 '<time class="submit-date">%s</time>' + "\n\r"
                 '<div class="text">' + "\n\r"
@@ -51,7 +51,7 @@ def build_comment_tree(comment_list):
     for k,v in comment_dic.items():
         #第一层的html
         html += ('<li class="comment-item">' + "\n\r"
-                '<img width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
+                '<img class="img-circle" width="40" height="40" src="%s" alt="个人头像" />' + "\n\r"
                 '<span class="nickname">%s</span>' + "\n\r"
                 '<time class="submit-date">%s</time>' + "\n\r"
                 '<div class="text">' + "\n\r"

@@ -43,8 +43,8 @@ class Post(models.Model):
     #  关系
     #  文章和分类是多对一的关系
     category = models.ForeignKey(Category)
-    #  文章和标签是多对多的关系 文章可以没有标签blank=True
-    tags = models.ManyToManyField(Tag, blank=True)
+    #  文章和标签是多对多的关系 文章默认标签为 python
+    tags = models.ManyToManyField(Tag, default='python')
     #  文章和作者是多对一的关系，其中作者从django.contrib.auth.models导入的User模型类
     author = models.ForeignKey(User)
 

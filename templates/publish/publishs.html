@@ -2,27 +2,20 @@
 
 {% block main %}
     <main class="col-md-8">
-        <form action="{% url 'publish:submit_post' %}" method="post">
+    <div class="unit-1-2 unit-1-on-mobile">
+        <form action="{% url 'publish:publishs' %}" method="post">
             {% csrf_token %}
-            <label>标题：</label><input type="text" name="title"/>
-            <br/>
-            <label>分类：</label><select name="category">
-            <br/>
-            {% for category in category_list %}
-                <option>{{ category.name }}</option>
+            {% for field in form %}
+                {# 实际上是label标签 #}
+                {{ field.label_tag }}
+                {# 实际上是input标签 #}
+                {{ field }}
+                {# 报错 #}
+                {{ field.errors }}<hr/>
+                {# 如果有帮助信息，则显示 #}
             {% endfor %}
-            </select>
-            <br/>
-            <label>标签：</label><select name="tag">
-            <br/>
-            {% for tag in tag_list %}
-                <option>{{ tag.name }}</option>
-            {% endfor %}
-            </select>
-            <br/>
-            <label>内容：</label><textarea cols="100" name="content"></textarea>
-            <br/>
-            <input type="submit" value="提交"/>
+            <button type="button" class="btn btn-primary">发表</button>
         </form>
+    </div>
     </main>
 {% endblock %}

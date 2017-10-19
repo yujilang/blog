@@ -22,10 +22,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^',include('blog.urls')),
-    url(r'^',include('comment.urls')),
     url(r'^all/rss/$', AllPostsRssFeed(), name='rss'),
     url(r'^search/',include('haystack.urls')),
     url(r'^accounts/',include('users.urls')),
     url(r'^accounts/',include('django.contrib.auth.urls')),
+    url(r'^',include('blog.urls')),
+    url(r'^',include('comment.urls')),
+    url(r'^',include('publish.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

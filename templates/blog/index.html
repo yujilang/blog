@@ -51,7 +51,11 @@
 
         {% if is_paginated %}
             <div class="pagination">
-                <ul>
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}">
+                            <span aria-hidden="true">&larr;</span>上一页</a></li>
+                    {% endif %}
                     {% if first %}
                         <li><a href="?page=1">1</a></li>
                     {% endif %}
@@ -63,8 +67,10 @@
                             <li><a href="?page={{ i }}">{{ i }}</a></li>
                         {% endfor %}
                     {% endif %}
-                    <li class="current">
-                        <a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+                    <li class="active">
+                        <a href="?page={{ page_obj.number }}">
+                            {{ page_obj.number }}
+                        </a>
                     </li>
                     {% if right %}
                         {% for i in right %}
@@ -77,10 +83,19 @@
                     {% if last %}
                         <li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
                     {% endif %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}">
+                            下一页<span aria-hidden="true">&rarr;</span></a></li>
+                    {% endif %}
                 </ul>
+                <div class="input-group">
+                    <form method="get">
+                       <input type="text" class="form-control" placeholder="请输入页码" name="page">
+                       <button class="btn btn-default" type="button">跳转</button>
+                    </form>
+                </div>
             </div>
         {% endif %}
-
     </main>
 {% endblock %}
 

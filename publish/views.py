@@ -1,24 +1,22 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 
-from blog.models import Category,Tag,Post
+from .forms import PostForm
 
-from django.contrib.auth.models import User
 
 def publishs(request):
-    category_list = Category.objects.all()
-    tag_list = Tag.objects.all()
-    return render(request ,'publish/publishs.html', locals())
-
-def submit_post(request):
+    user = request.user
     if request.method == 'POST':
-        title = request.POST.get('title')
-        categorys = request.POST.get('category')
-        category = Category.objects.get(name=categorys)
-        # tag = request.POST.get('tag')
-        # tags = Tag.objects.get(name=tag)
-        body = request.POST.get('content')
-        author = User.objects.get(username=request.user.username)
-        Post.objects.create(title=title,category=category,body=body,author=author)
-        return redirect('blog:index')
+       form = PostForm(request.POST)
+
+       if form.is_valid():
+           post = form.save(commit=False)
+           post.author = user
+           post.save()
+           #  将多对多关系数据保存到数据库
+           form.save_m2m()
+           return redirect('blog:index')
+
+    else:
+        form = PostForm()
+        return render(request, 'publish/publishs.html', locals())
 # Create your views here.
