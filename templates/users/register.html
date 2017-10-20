@@ -18,7 +18,7 @@
         <div class="flex-center">
             <div class="unit-1-2 unit-1-on-mobile">
                 <h3>注册</h3>
-                <form class="form" action="{% url 'users:register' %}" method="post">
+                <form class="form" action="{% url 'users:register' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
                         {# 实际上是label标签 #}
@@ -32,6 +32,9 @@
                             <p class="help text-small text-muted">{{ field.help_text|safe }}</p>
                         {% endif %}
                     {% endfor %}
+                    {{ profile.avatar.label_tag }}
+                    {{ profile.avatar }}
+                    {{ profile.avatar.errors }}
                     <button type="submit" class="btn btn-primary btn-block">注册</button>
                     <input type="hidden" name="next" value="{{ next }}"/>
                 </form>

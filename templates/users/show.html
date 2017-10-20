@@ -1,51 +1,101 @@
-{% extends 'up_base.html' %}
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>于寂浪 &amp; yujilang</title>
+    <link href="{% static 'users/css/bootstrap.css' %}" rel='stylesheet' type='text/css'/>
+    <link href="{% static 'users/css/style.css' %}" rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Asap:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
 
-{% block content %}
+<div id="home" class="header">
     <div class="container">
-        <div class="row">
-            <main class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">名字</h3>
+        <!-- top-hedader -->
+        <div class="top-header">
+            <div class="top-nav">
+                <div class="navigation">
+                    <div class="logo">
+                        <h1><a href="{% url 'blog:index' %}">yujilang</a></h1>
                     </div>
-                    <div class="panel-body">
-                      {{ user_list.username }}
+                    <div class="navigation-right">
+                        <nav class="link-effect-3" id="link-effect-3">
+                            <ul class="nav1 nav nav-wil">
+                                <li class="scroll"><a href="{% url 'blog:index' %}">首页</a></li>
+                                {% if user.is_authenticated %}
+                                    {% if user.username == 'chen' %}
+                                        <li><a class="scroll" href="{% url 'publish:publishs' %}">发帖</a>
+                                        </li>
+                                    {% endif %}
+                                    <li><a class="scroll"
+                                           href="{% url 'users:usershow' user.pk %}">{{ user.username }}</a></li>
+                                    <li><a class="scroll"><img class="img-circle"
+                                                                        style="margin-top: -10px"
+                                                                        width="40" height="40"
+                                                                        src="{{ request.user.profile.avatar.url }}"/></a>
+                                    </li>
+                                    <li><a class="scroll" href="{% url 'password_change' %}">修改密码</a>
+                                    </li>
+                                    <li><a class="scroll" href="{% url 'logout' %}">退出</a></li>
+                                {% else %}
+                                    <li><a class="scroll" href="{% url 'login' %}">登陆</a></li>
+                                    <li><a class="scroll" href="{% url 'users:register' %}">注销</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
                     </div>
-
-                    <div class="panel-heading">
-                        <h3 class="panel-title">昵称</h3>
-                    </div>
-                    <div class="panel-body">
-                      {{ user_list.profile.nickname }}
-                    </div>
-
-                    <div class="panel-heading">
-                        <h3 class="panel-title">手机号</h3>
-                    </div>
-                    <div class="panel-body">
-                      {{ user_list.profile.phone }}
-                    </div>
-
-                    <div class="panel-heading">
-                        <h3 class="panel-title">邮箱</h3>
-                    </div>
-                    <div class="panel-body">
-                      {{ user_list.email }}
-                    </div>
-
+                    <div class="clearfix"></div>
                 </div>
-            </main>
-            <main class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">头像</h3>
-                    </div>
+            </div>
+
+            <div class="banner-info">
+                <div class="col-md-7 header-right">
+                    <h1>Hi !</h1>
+                    <h6>All things in their being are good for something</h6>
+                    <ul class="address">
+                        <li>
+                            <ul class="address-text">
+                                <li><b>姓名</b></li>
+                                <li>{{ user_list.username }}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>昵称</b></li>
+                                <li>{{ user_list.profile.nickname }}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>电话</b></li>
+                                {% if user_list.profile.phone %}
+                                    <li>{{ user_list.profile.phone }}</li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>Email</b></li>
+                                <li>{{ user_list.email }}</li>
+                            </ul>
+                        </li>
+                        {% if user_list.id == user.id %}
+                            <li><a href="{% url 'users:change' user_list.id %}">
+                                <button style="margin-top: 50px" type="button" class="btn btn-default">修改</button>
+                            </a></li>
+                        {% endif %}
+                    </ul>
                 </div>
-                <img class="img-circle" style="margin: 50px 100px" width="158" height="158" src="{{ user_list.profile.avatar.url }}" alt="个人头像" />
-            </main>
+                <div class="col-md-5 header-left">
+                    <img src="{{ user_list.profile.avatar.url }}">
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
+</div>
 
+</body>
+</html>
 
-
-{% endblock %}

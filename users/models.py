@@ -10,7 +10,7 @@ class Profile(models.Model):
     #  电话 可以为空
     phone = models.CharField(max_length=20, null=True, blank=True)
     #  头像 upload_to 头像保存地址 default 默认头像
-    avatar = models.ImageField(upload_to='avatar/',default="avatar/img.jpg")
+    avatar = models.ImageField(upload_to='avatar',default="avatar/1.jpg")
 
     #  Profile 与 User 是一对一的关系
     user = models.OneToOneField(User)
