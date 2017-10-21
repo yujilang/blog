@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <main class="col-md-8">
+    <div class="unit-1-2 unit-1-on-mobile">
+        <form action="{% url 'publish:change_post' post_id %}" method="post">
+            {% csrf_token %}
+                {# 标题 #}
+                {{ form.title.label_tag }}
+                {{ form.title }}<hr/>
+                {# 标签 #}
+                {{ form.tags.label_tag }}
+                {{ form.tags }}<br>
+                {{ form.tags.help_text|safe }}<hr/>
+                {# 分类 #}
+                {{ form.category.label_tag }}
+                {{ form.category }}<hr/>
+                {# 内容 #}
+                {{ form.body.label_tag }}
+                {{ form.body }}<hr/>
+            <button type="submit" class="btn btn-primary">修改</button>
+        </form>
+    </div>
+    </main>
+{% endblock %}

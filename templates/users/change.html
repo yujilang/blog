@@ -2,6 +2,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
     <title>于寂浪 &amp; yujilang</title>
     <link href="{% static 'users/css/bootstrap.css' %}" rel='stylesheet' type='text/css'/>
     <link href="{% static 'users/css/style.css' %}" rel='stylesheet' type='text/css'/>
@@ -59,11 +64,9 @@
                             {% for form in user_form %}
                                 <li>
                                     <ul class="address-text">
-
                                         <li><b>{{ form.label_tag }}</b></li>
                                         {{ form }}
                                         {{ form.errors }}
-
                                     </ul>
                                 </li>
                             {% endfor %}
@@ -88,14 +91,14 @@
                                 </ul>
                             </li>
                         </ul>
-                        <button style="margin-top: 50px" type="submit" class="btn btn-default">确认</button>
-                        <a href="{% url 'users:usershow' user.id %}"><button style="margin-top: 50px" type="button" class="btn btn-default">返回</button></a>
-
+                        <button style="margin-top: 50px" type="submit" class="btn btn-primary">确认</button>
+                        <a href="{% url 'users:usershow' user.id %}">
+                            <button style="margin-top: 50px" type="button" class="btn btn-info">返回</button>
+                        </a>
                     </div>
                     <div class="col-md-5 header-left">
                         <img src="{{ user.profile.avatar.url }}">
                     </div>
-
                 </form>
                 <div class="clearfix"></div>
             </div>

@@ -11,10 +11,10 @@ class Profile(models.Model):
     #  电话 可以为空
     phone = models.CharField(max_length=11, null=True, blank=True,
                              error_messages={
-                                 'phone_err': '手机号码格式有误',
+                                 'phone_err': '号码格式有误',
                              },
                              validators=[
-                                 RegexValidator(regex='1[3578][0-9]{9}', message='手机号码格式有误',
+                                 RegexValidator(regex='1[3578][0-9]{9}', message='号码格式有误',
                                                 code='phone_err')])
     #  头像 upload_to 头像保存地址 default 默认头像
     avatar = models.ImageField(upload_to='avatar',default="avatar/1.jpg")
