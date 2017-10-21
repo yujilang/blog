@@ -5,15 +5,17 @@
     <div class="unit-1-2 unit-1-on-mobile">
         <form action="{% url 'publish:publishs' %}" method="post">
             {% csrf_token %}
-            {% for field in form %}
                 {# 实际上是label标签 #}
-                {{ field.label_tag }}
+                {{ form.title.label_tag }}
                 {# 实际上是input标签 #}
-                {{ field }}
-                {# 报错 #}
-                {{ field.errors }}<hr/>
-                {# 如果有帮助信息，则显示 #}
-            {% endfor %}
+                {{ form.title }}<hr/>
+                {{ form.tags.label_tag }}
+                {{ form.tags }}<br>
+                {{ form.tags.help_text|safe }}<hr/>
+                {{ form.category.label_tag }}
+                {{ form.category }}<hr/>
+                {{ form.body.label_tag }}
+                {{ form.body }}<hr/>
             <button type="submit" class="btn btn-primary">发表</button>
         </form>
     </div>

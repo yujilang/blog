@@ -21,3 +21,16 @@ class ProfileForm(ModelForm):
         fields = ['avatar']
         #  设置字段的标签名字
         labels = {'avatar':'头像'}
+
+class User1Form(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class User2Form(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['nickname', 'phone' ,'avatar']
+        labels = {'avatar': '用户头像',
+                  'nickname':'昵称',
+                  'phone':'手机号码'}

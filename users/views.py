@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, ProfileForm
+from .forms import *
 from .models import Profile
 from django.contrib.auth.models import User
 
@@ -45,7 +45,27 @@ def register(request):
     # 将记录用户注册前页面的 redirect_to 传给模板，以维持 next 参数在整个注册流程中的传递
     return render(request, 'users/register.html', context={'form': form, 'profile':form1,'next':redirect_to})
 
-#  用户信息视图函数
+#  用户信息显示视图函数
 def show(request,pk):
     user_list = User.objects.get(id=int(pk))
     return render(request, 'users/show.html', locals())
+
+#  用户信息修改视图函数
+def change(request, pk):
+    #   获取当前 id 对象的用户信息
+    user = User.objects.get(id=pk)
+    profile = Profile.objects.get(user=user)
+    if request.method == 'POST':
+        #   将用户所修改信息与获取信息相关联，指定给谁做修改
+        user_form = User1Form(request.POST, instance=user)
+        profile_form = User2Form(request.POST, request.FILES, instance=profile)
+        if user_form.is_valid():
+            if profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                return redirect('users:usershow',pk)
+    else:
+        #  将当前 id 信息返回给页面
+        user_form = User1Form( instance=user)
+        profile_form = User2Form( instance=profile)
+    return render(request, 'users/change.html', locals())

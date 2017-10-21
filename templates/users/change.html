@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>于寂浪 &amp; yujilang</title>
+    <link href="{% static 'users/css/bootstrap.css' %}" rel='stylesheet' type='text/css'/>
+    <link href="{% static 'users/css/style.css' %}" rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Asap:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div id="home" class="header">
+    <div class="container">
+        <!-- top-hedader -->
+        <div class="top-header">
+            <div class="top-nav">
+                <div class="navigation">
+                    <div class="logo">
+                        <h1><a href="{% url 'blog:index' %}">yujilang</a></h1>
+                    </div>
+                    <div class="navigation-right">
+                        <nav class="link-effect-3" id="link-effect-3">
+                            <ul class="nav1 nav nav-wil">
+                                <li class="scroll"><a href="{% url 'blog:index' %}">首页</a></li>
+                                {% if user.is_authenticated %}
+                                    {% if user.username == 'chen' %}
+                                        <li><a class="scroll" href="{% url 'publish:publishs' %}">发帖</a>
+                                        </li>
+                                    {% endif %}
+                                    <li><a class="scroll"
+                                           href="{% url 'users:usershow' user.pk %}">{{ user.username }}</a></li>
+                                    <li><a class="scroll"><img class="img-circle"
+                                                               style="margin-top: -10px"
+                                                               width="40" height="40"
+                                                               src="{{ request.user.profile.avatar.url }}"/></a>
+                                    </li>
+                                    <li><a class="scroll" href="{% url 'password_change' %}">修改密码</a>
+                                    </li>
+                                    <li><a class="scroll" href="{% url 'logout' %}">退出</a></li>
+                                {% else %}
+                                    <li><a class="scroll" href="{% url 'login' %}">登陆</a></li>
+                                    <li><a class="scroll" href="{% url 'users:register' %}">注销</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="banner-info">
+                <form method="post" action="{% url 'users:change' user.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-7 header-right">
+                        <h1>Hi !</h1>
+                        <h6>All things in their being are good for something</h6>
+                        <ul class="address">
+                            {% for form in user_form %}
+                                <li>
+                                    <ul class="address-text">
+
+                                        <li><b>{{ form.label_tag }}</b></li>
+                                        {{ form }}
+                                        {{ form.errors }}
+
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                            <li>
+                                <ul class="address-text">
+                                    <li><b>{{ profile_form.nickname.label_tag }}</b></li>
+                                    {{ profile_form.nickname }}
+                                </ul>
+                            </li>
+                            <li>
+                                <ul class="address-text">
+                                    <li><b>{{ profile_form.phone.label_tag }}</b></li>
+                                    {{ profile_form.phone }}
+                                    {{ profile_form.phone.errors }}
+                                </ul>
+                            </li>
+                            <li>
+                                <ul class="address-text">
+                                    <li><b>{{ profile_form.avatar.label_tag }}</b></li>
+                                    <li>{{ profile_form.avatar }}</li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <button style="margin-top: 50px" type="submit" class="btn btn-default">确认</button>
+                        <a href="{% url 'users:usershow' user.id %}"><button style="margin-top: 50px" type="button" class="btn btn-default">返回</button></a>
+
+                    </div>
+                    <div class="col-md-5 header-left">
+                        <img src="{{ user.profile.avatar.url }}">
+                    </div>
+
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
